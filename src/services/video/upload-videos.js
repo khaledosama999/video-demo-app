@@ -37,11 +37,11 @@ const getPublicUrl = (bucketName, fileName) => `https://storage.googleapis.com/$
 
 const uploadVideo = async (req, res, next) => {
   if (req.error) {
-    throw new Error('error in uploading single file', req.error);
+    throw new Error('Error in uploading single video', req.error);
   }
 
   if (!req.file) {
-    throw new Error('error in uploading single file', { message: 'No file uploaded.' });
+    throw new Error('error in uploading single video', { message: 'No video uploaded.' });
   }
 
   const bucket = gc.bucket(storageBucketName);
@@ -66,7 +66,7 @@ const uploadVideo = async (req, res, next) => {
     try {
       await file.makePublic();
       req.fileUrl = getPublicUrl(storageBucketName, gcsFileName);
-      await new VideoModel({ url: req.fileUrl }).save();
+      await new VideoModel({ url: req.fileUrl, title: gcsFileName, ...req.body }).save();
       next();
     } catch (error) {
       throw new Error('error to upload single video', { error, message: error.message });
