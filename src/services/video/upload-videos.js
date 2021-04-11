@@ -1,8 +1,9 @@
 const { Storage } = require('@google-cloud/storage');
 const path = require('path');
 const mu = require('multer');
-const { storageBucketName, keyFilename, projectId } = require('../../config');
-const { VideoModel } = require('../models');
+const ffmpeg = require('ffmpeg');
+const { storageBucketName, keyFilename, projectId } = require('../../../config');
+const { VideoModel } = require('../../models');
 
 const extensions = ['.mp4', '.mov', '.wmv', '.flv', '.avi', '.webm', '.mkv', '.avchd'];
 
@@ -28,7 +29,7 @@ const multer = mu({
     callback(null, true);
   },
   limits: {
-    fileSize: 25 * 1024 * 1024,
+    fileSize: 200 * 1024 * 1024,
   },
 });
 

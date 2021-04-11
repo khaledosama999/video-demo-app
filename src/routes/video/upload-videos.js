@@ -1,6 +1,6 @@
 const express = require('express');
 const HttpStatus = require('http-status-codes');
-const { uploadVideo, uploadVideos, multer } = require('../../services/upload-videos');
+const { uploadVideoService: { uploadVideo, uploadVideos, multer } } = require('../../services/video');
 
 const router = new express.Router();
 
