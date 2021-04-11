@@ -4,10 +4,15 @@ const logger = require('./logger');
 const connectToDB = require('./connect-to-db');
 
 const boot = async () => {
-  await connectToDB();
-  app.listen(config.port, () => {
-    logger.info(`App running on port: ${config.port}`);
-  });
+  try {
+    await connectToDB();
+
+    app.listen(config.port, () => {
+      logger.info(`Server running on port:  ${config.port}`);
+    });
+  } catch (error) {
+    logger.error('Error to start server', { error, message: error.message });
+  }
 };
 
 boot();

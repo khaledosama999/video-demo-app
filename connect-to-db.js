@@ -13,7 +13,7 @@ const connectToDB = async () => {
       useFindAndModify: false,
       useCreateIndex: true,
     })
-    .then(() => logger.info('MongoDB connected', { DBUrl, DBAuth }))
+    .then(() => logger.info('MongoDB connected'))
     .catch((error) => logger.error('Error to connect to mongodb', { error, message: error.message }));
 };
 
