@@ -26,5 +26,6 @@ const mainRouter = new express.Router();
 app.use('/apis', mainRouter);
 
 mainRouter.use('/healthcheck', require('./routes/healthcheck'));
+require('./routes/video')(mainRouter);
 
 module.exports = app;
