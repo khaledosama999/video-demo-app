@@ -1,7 +1,7 @@
 const { Storage } = require('@google-cloud/storage');
 const path = require('path');
 const mu = require('multer');
-const ffmpeg = require('ffmpeg');
+const Ffmpeg = require('ffmpeg');
 const { storageBucketName, keyFilename, projectId } = require('../../../config');
 const { VideoModel } = require('../../models');
 
@@ -35,7 +35,7 @@ const multer = mu({
 
 const getPublicUrl = (bucketName, fileName) => `https://storage.googleapis.com/${bucketName}/${fileName}`;
 
-const uploadVideo = (req, res, next) => {
+const uploadVideo = async (req, res, next) => {
   if (req.error) {
     throw new Error('error in uploading single file', req.error);
   }
@@ -73,7 +73,8 @@ const uploadVideo = (req, res, next) => {
     }
   });
 
-  stream.end(req.file.buffer);
+  const process = await new Ffmpeg(req.file);
+  stream.end(process);
 };
 
 const uploadVideos = async (req, res, next) => {
@@ -88,14 +89,14 @@ const uploadVideos = async (req, res, next) => {
   const bucket = gc.bucket(storageBucketName);
   req.filesUrls = [];
 
-  const promises = req.files.map((image, index) => {
-    const gcpName = Date.now() + image.originalname; // req.headers.decode.username +
+  const promises = req.files.map((video, index) => {
+    const gcpName = Date.now() + video.originalname; // req.headers.decode.username +
     const file = bucket.file(gcpName);
 
     const promise = new Promise((resolve, reject) => {
       const stream = file.createWriteStream({
         metadata: {
-          contentType: image.mimetype,
+          contentType: video.mimetype,
         },
       });
 
@@ -113,7 +114,10 @@ const uploadVideos = async (req, res, next) => {
         reject(err);
       });
 
-      stream.end(image.buffer);
+      const compressedVideoPromise = new Ffmpeg(video);
+      compressedVideoPromise.then((compressedVideo) => {
+        stream.end(compressedVideo);
+      });
     });
 
     return promise;
