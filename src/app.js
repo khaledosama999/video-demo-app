@@ -7,18 +7,17 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const helmet = require('helmet');
 const xss = require('xss-clean');
-const { loggerMiddleware } = require('./middleware');
+const { loggerMiddleware, errorHandlerMiddleware: { notFound, handleError } } = require('./middleware');
 
 const corsOpts = { origin: '*', methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'] };
 const app = express();
 
 app.use(xss());
 app.use(helmet());
-
 app.use(cors(corsOpts));
 app.use(loggerMiddleware);
-app.use(bodyParser.json({ limit: '50mb' }));
-app.use(bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 }));
+app.use(bodyParser.json({ limit: '200mb' }));
+app.use(bodyParser.urlencoded({ limit: '200mb', extended: true, parameterLimit: 50000 }));
 app.use(cookieParser());
 
 // App main router prefixed by /apis as our current configuration forwards requests with prefix /apis to this app
@@ -27,5 +26,8 @@ app.use('/apis', mainRouter);
 
 mainRouter.use('/healthcheck', require('./routes/healthcheck'));
 require('./routes/video')(mainRouter);
+
+app.use(handleError);
+app.use(notFound);
 
 module.exports = app;
