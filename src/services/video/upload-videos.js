@@ -1,12 +1,11 @@
 const { Storage } = require('@google-cloud/storage');
 const path = require('path');
 const mu = require('multer');
-const Ffmpeg = require('ffmpeg');
+// const Ffmpeg = require('ffmpeg');
 const { storageBucketName, keyFilename, projectId } = require('../../../config');
 const { VideoModel } = require('../../models');
 
 const extensions = ['.mp4', '.mov', '.wmv', '.flv', '.avi', '.webm', '.mkv', '.avchd'];
-
 const gc = new Storage({
   clientOptions: {
     ...keyFilename,
@@ -57,7 +56,8 @@ const uploadVideo = async (req, res, next) => {
   });
 
   stream.on('error', (error) => {
-    throw new Error('error to upload single video', { error, message: error.message });
+    console.log(error);
+    throw new Error(`error to upload single video, ${error.message}`);
   });
 
   stream.on('finish', async () => {
@@ -69,12 +69,13 @@ const uploadVideo = async (req, res, next) => {
       await new VideoModel({ url: req.fileUrl, title: gcsFileName, ...req.body }).save();
       next();
     } catch (error) {
+      console.log(error);
       throw new Error('error to upload single video', { error, message: error.message });
     }
   });
 
-  const process = await new Ffmpeg(req.file);
-  stream.end(process);
+  // const process = await new Ffmpeg(req.file);
+  stream.end(req.file.buffer);
 };
 
 const uploadVideos = async (req, res, next) => {
@@ -114,10 +115,10 @@ const uploadVideos = async (req, res, next) => {
         reject(err);
       });
 
-      const compressedVideoPromise = new Ffmpeg(video);
-      compressedVideoPromise.then((compressedVideo) => {
-        stream.end(compressedVideo);
-      });
+      // const compressedVideoPromise = new Ffmpeg(video);
+      // compressedVideoPromise.then((compressedVideo) => {
+      stream.end(video.buffer);
+      // });
     });
 
     return promise;
