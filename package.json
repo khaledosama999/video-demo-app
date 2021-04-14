@@ -6,10 +6,8 @@
   "scripts": {
     "start": "node ./index.js",
     "server": "./node_modules/.bin/nodemon ./index.js",
-    "client": "cd front-end && npm install && npm run start",
     "lint": "./node_modules/.bin/eslint ./src/ ",
     "start:dev": "./node_modules/.bin/nodemon ./index.js",
-    "postinstall": "cd front-end && npm install && npm run build",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "Milad E. Fahmy <miladezzat.f@gmail.com>",
