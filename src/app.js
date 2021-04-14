@@ -21,12 +21,12 @@ app.use(loggerMiddleware);
 app.use(bodyParser.json({ limit: '200mb' }));
 app.use(bodyParser.urlencoded({ limit: '200mb', extended: true, parameterLimit: 50000 }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, '/front-end/build')));
+app.use(express.static(path.join(__dirname, '../front-end/build')));
 
 app.set('trust proxy', 1);
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
+  windowMs: 1 * 60 * 1000, // 15 minutes
+  max: 300, // limit each IP to 100 requests per windowMs
 });
 
 //  apply to all requests
