@@ -14,7 +14,7 @@ const UploadSection = () => {
     fromData.append('title', fileTitle);
     fromData.append('description', fileDescription);
 
-    await axios.post(`${process.env.REACT_APP_API_BASE_URL}videos/single}`, fromData);
+    return axios.post(`https://video-test-310110.uc.r.appspot.com/videos/single`, fromData);
   };
 
   return (

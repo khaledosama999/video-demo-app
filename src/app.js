@@ -5,8 +5,6 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const helmet = require('helmet');
-const xss = require('xss-clean');
 const rateLimit = require('express-rate-limit');
 const path = require('path');
 const { loggerMiddleware, errorHandlerMiddleware: { notFound, handleError } } = require('./middleware');
@@ -14,8 +12,6 @@ const { loggerMiddleware, errorHandlerMiddleware: { notFound, handleError } } = 
 const corsOpts = { origin: '*', methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'] };
 const app = express();
 
-app.use(xss());
-app.use(helmet());
 app.use(cors(corsOpts));
 app.use(loggerMiddleware);
 app.use(bodyParser.json({ limit: '200mb' }));

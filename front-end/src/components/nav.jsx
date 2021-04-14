@@ -13,7 +13,6 @@ const NavBar = () => (
       <Nav className="mr-auto">
         <Nav.Link><Link to="/home" style={{ textDecoration: 'none' }}>Home</Link></Nav.Link>
         <Nav.Link><Link to="/upload" style={{ textDecoration: 'none' }}>Upload</Link></Nav.Link>
-        <Nav.Link><Link to="/video" style={{ textDecoration: 'none' }}>Video</Link></Nav.Link>
       </Nav>
     </Navbar.Collapse>
   </Navbar>

@@ -1,15 +1,35 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { CardColumns } from 'react-bootstrap';
 import VideoCard from '../components/video-card';
 
-const DisplayVideo = () => (
-  <CardColumns style={{ marginTop: '2rem' }}>
-    <VideoCard />
-    <VideoCard />
-    <VideoCard />
-    <VideoCard />
-    <VideoCard />
-  </CardColumns>
-);
+const DisplayVideo = () => {
+  const [videos, setVideos] = useState([]);
+
+  const getVideosService = async () => {
+    const response = await axios.get(`https://video-test-310110.uc.r.appspot.com/videos?limit=1000`);
+
+    setVideos(response.data.videos);
+  };
+
+  useEffect(() => {
+    getVideosService();
+  }, []);
+
+  const cards = videos
+    .map(({ title, url, description }) => (
+      <VideoCard
+        title={title}
+        url={url}
+        description={description}
+      />
+    ));
+
+  return (
+    <CardColumns style={{ marginTop: '2rem' }}>
+      {cards}
+    </CardColumns>
+  );
+};
 
 export default DisplayVideo;
