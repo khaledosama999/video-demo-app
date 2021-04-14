@@ -7,7 +7,7 @@
     "start": "node ./index.js",
     "server": "./node_modules/.bin/nodemon ./index.js",
     "lint": "./node_modules/.bin/eslint ./src/ ",
-    "start:dev": "./node_modules/.bin/nodemon ./index.js",
+    "start:dev": "./node_modules/.bin/nodemon ./index.js"
   },
   "author": "Milad E. Fahmy <miladezzat.f@gmail.com>",
   "contributors": [
