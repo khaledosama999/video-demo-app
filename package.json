@@ -8,7 +8,6 @@
     "server": "./node_modules/.bin/nodemon ./index.js",
     "lint": "./node_modules/.bin/eslint ./src/ ",
     "start:dev": "./node_modules/.bin/nodemon ./index.js",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "Milad E. Fahmy <miladezzat.f@gmail.com>",
   "contributors": [
