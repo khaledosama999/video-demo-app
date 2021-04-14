@@ -7,7 +7,7 @@ const DisplayVideo = () => {
   const [videos, setVideos] = useState([]);
 
   const getVideosService = async () => {
-    const response = await axios.get(`https://video-test-310110.uc.r.appspot.com/videos?limit=1000`);
+    const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}videos?limit=1000`);
 
     setVideos(response.data.videos);
   };
