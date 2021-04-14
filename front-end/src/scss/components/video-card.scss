@@ -1,0 +1,38 @@
+.video_card_body{
+    display: flex;
+    flex-direction: column;
+
+    &_title {
+       @include respond(mobile){
+            align-self: center;
+            justify-self: center;
+        }
+    }
+
+    &_description{
+     @include respond(mobile){
+         text-align: center;
+         justify-self: center;
+      }
+    }
+
+    &_btn{
+        @include respond(tablet-portrait){
+           align-self: flex-start;
+        }
+
+
+        @include respond(tablet-landscape){
+            align-self: flex-start;
+         }
+
+         @include respond(mobile){
+            width: 100%;
+            align-self: center;
+        }
+
+        @include respond(desktop){
+            align-self: flex-start;
+         }
+    }
+}
