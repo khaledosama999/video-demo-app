@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node ./index.js",
     "lint": "./node_modules/.bin/eslint ./src/ ",
-    "start:dev": "./node_modules/.bin/nodemon ./index.js"
+    "start:dev": "./node_modules/.bin/nodemon ./index.js",
+    "postinstall": "cd front-end && npm install && npm run build"
   },
   "author": "Milad E. Fahmy <miladezzat.f@gmail.com>",
   "contributors": [
