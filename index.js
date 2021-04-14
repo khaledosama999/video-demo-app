@@ -7,7 +7,7 @@ const boot = async () => {
   try {
     await connectToDB();
 
-    app.listen(config.port, () => {
+    app.listen(process.env.PORT || config.port, () => {
       logger.info(`Server running on port:  ${config.port}`);
     });
   } catch (error) {
